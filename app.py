@@ -351,7 +351,7 @@ x_tomm_scaled_reshaped = np.nan_to_num(x_tomm_scaled_reshaped, nan=np.nanmean(x_
 
 # Tahmin yap
 prediction = reg.predict(x_tomm_scaled_reshaped)
-prediction = scaler.inverse_transform(prediction.reshape(-1,1))
+prediction = scaler.inverse_transform(prediction.reshape(1,-1))
 
 # Tahmini göster
 st.markdown(f"### Yarının tahmini için: {ticker} = {round(prediction[0][0],2)}")

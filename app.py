@@ -62,7 +62,7 @@ volumes = df['volume']
 high_prices = df['high']
 low_prices = df['low']
 dates = df['date']
-DATA_LEN = 500
+DATA_LEN = 300
 
 # Her bir veri sütunu için son DATA_LEN sayısı kadar veri noktası aldım
 dates = dates[-DATA_LEN:].to_list()
@@ -274,7 +274,7 @@ for i in range(len(pivot_points)):
         s1 = (2 * pivot_points[i]) - prev_high
 
         # İkinci direnç ve destek seviyelerini hesapladım
-        r2 = pivot_point[i] + (prev_high - prev_low)
+        r2 = pivot_points[i] + (prev_high - prev_low)
         s2 = pivot_points[i] - (prev_high - prev_low)
 
         resistance_1.append(r1)

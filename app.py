@@ -483,7 +483,7 @@ if export_as_pdf:
         figs[1].savefig(tmpfile.name)
         name = tmpfile.name
 
-    pdf.image(name, 12, 100, WIDTH - 20, 100)
+    pdf.image(name, 12, 100, w=WIDTH - 20,h= 100)
     name = ""
     pdf.ln(115)
     pdf.set_font(FONT_FAMILY, size=12)

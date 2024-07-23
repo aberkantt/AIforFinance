@@ -372,14 +372,14 @@ tot_prices = list(close_prices)
 
 # Belirtilen gün sayısı için gelecekteki fiyatları tahmin et
 for i in range(FUTURE_DAYS):
-    x_prices = tot_prices[len(tot_prices) - prediction_days:len(tot_prices)]
-    x_prices_reshaped = np.array(x_prices).reshape(-1,1)
+    x_prices = tot_prices[len(tot_prices) - prediction_days: len(tot_prices)]
+    x_prices_reshaped = np.array(x_prices).reshape(1, -1)
 
     x_prices_scaled = np.zeros_like(x_prices_reshaped)
     for j in range(x_prices_reshaped.shape[1]):
-        feature = x_prices_reshaped[:,j]
-        feature_scaled = scaler.transform(feature.reshape(-1,1))
-        x_prices_scaled[:,j] = feature_scaled.flatten()
+        feature = x_prices_reshaped[:, j]
+        feature_scaled = scaler.transform(feature.reshape(-1, 1))
+        x_prices_scaled[:, j] = feature_scaled.flatten()
 
 
     # Gelecekteki tahminlerde eksik değerleri ele alalım.
@@ -387,9 +387,9 @@ for i in range(FUTURE_DAYS):
 
     prediction = reg.predict(x_prices_scaled)
 
-    prediction_inverse_scaled = scaler.inverse_transform(prediction.reshape(-1,1))
+    prediction_inverse_scaled = scaler.inverse_transform(prediction.reshape(-1, 1))
 
-    tot_prices = np.concatenate((tot_prices,prediction_inverse_scaled.flatten()))
+    tot_prices = np.concatenate((tot_prices, prediction_inverse_scaled.flatten()))
     predicted_prices.append(prediction_inverse_scaled)
 
 tot_prices = np.array(tot_prices)
@@ -399,11 +399,11 @@ tot_prices = np.reshape(tot_prices, (tot_prices.shape[0]))
 predicted_prices = np.reshape(predicted_prices, (predicted_prices.shape[0]))
 
 fig = plt.figure()
-plt.plot(tot_prices,label='Tahmin Edilen Gelecek Fiyatlar')
-plt.plot(close_prices,label='Şimdiki Fiyatlar')
-plt.xlabel("Gün Sonrası",fontsize=15,color='black')
-plt.ylabel("Fiyat",fontsize=15,color='black')
-plt.title("Gelecekteki Fiyat Tahminleri",fontsize = 17,color='black')
+plt.plot(tot_prices, label='Tahmin Edilen Gelecek Fiyatlar')
+plt.plot(close_prices, label='Şimdiki Fiyatlar')
+plt.xlabel("Gün Sonrası", fontsize=15, color='black')
+plt.ylabel("Fiyat", fontsize=15, color='black')
+plt.title("Gelecekteki Fiyat Tahminleri",fontsize=17, color='black')
 plt.legend()
 fig_html = mpld3.fig_to_html(fig)
 components.html(fig_html, height=500)

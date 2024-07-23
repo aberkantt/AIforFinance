@@ -134,7 +134,7 @@ for i in range(len(standard_deviations)):
 
 
 fig = plt.figure()
-plt.plot(close_for_calc, label='Basit Hareketli Ortalama',color='black')
+plt.plot(close_avg, label='Basit Hareketli Ortalama',color='black')
 plt.plot(upper_bollinger_band, label='Üst Bant')
 plt.plot(lower_bollinger_band,label='Alt Bant')
 plt.plot(close_prices,'r',label='Kapanış Fiyatı')
@@ -313,9 +313,9 @@ dataset = np.reshape(dataset,(dataset.shape[0],1))
 
 # Veri kümesini ölçeklendir
 scaler = MinMaxScaler(feature_range=(0, 1))
-scaler_data = scaler.fit_transform(dataset)
+scaled_data = scaler.fit_transform(dataset)
 
-train_data = scaler_data[0: int(training),:]
+train_data = scaled_data[0: int(training),:]
 
 # Özellikleri ve etiketleri hazırla
 x_train = []
@@ -323,8 +323,8 @@ y_train = []
 prediction_days = 60
 
 for i in range(prediction_days, len(train_data)):
-    x_train.append(train_data[i-prediction_days:i,0])
-    y_train.append(train_data[i,0])
+    x_train.append(train_data[i-prediction_days:i, 0])
+    y_train.append(train_data[i, 0])
 
 x_train, y_train = np.array(x_train), np.array(y_train)
 
@@ -334,27 +334,27 @@ x_train = np.nan_to_num(x_train, nan=np.nanmean(x_train))
 y_train = np.nan_to_num(y_train, nan=np.nanmean(y_train))
 
 #Doğrusal Regresyon modelini eğit
-reg = LinearRegression().fit(x_train,y_train)
+reg = LinearRegression().fit(x_train, y_train)
 
 x_tomm = close_prices[len(close_prices) - prediction_days:len(close_prices)]
 x_tomm = np.array(x_tomm)
-x_tomm_reshaped = x_tomm.reshape(-1,1)
+x_tomm_reshaped = x_tomm.reshape(-1, 1)
 
 # Yeniden şekillendirilmiş veriyi ölçeklendir
 x_tomm_scaled = scaler.transform(x_tomm_reshaped)
 
 # ölçeklenmiş veriyi tekrar (1, n_features) şekline getir
-x_tomm_scaled_reshaped = x_tomm_scaled.reshape(-1,1)
+x_tomm_scaled_reshaped = x_tomm_scaled.reshape(1, -1)
 
 # Gelecekteki tahminlerde eksik değerleri ele alalım.
 x_tomm_scaled_reshaped = np.nan_to_num(x_tomm_scaled_reshaped, nan=np.nanmean(x_tomm_scaled_reshaped))
 
 # Tahmin yap
 prediction = reg.predict(x_tomm_scaled_reshaped)
-prediction = scaler.inverse_transform(prediction.reshape(1,-1))
+prediction = scaler.inverse_transform(prediction.reshape(1, -1))
 
 # Tahmini göster
-st.markdown(f"### Yarının tahmini için: {ticker} = {round(prediction[0][0],2)}")
+st.markdown(f"### Yarının tahmini için: {ticker} = {round(prediction[0][0], 2)}")
 
 st.markdown("***")
 

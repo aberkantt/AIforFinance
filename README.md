@@ -57,9 +57,6 @@ Hisse senedi analizörü uygulamasını kullanmak için:
 8. **Gürültü Simülasyonu**: Daha gerçekçi senaryoları simüle etmek için tahmin edilen fiyatlara gürültü ekliyoruz.
 
 
-### Katkıda Bulunma
-Bu projeye katkıda bulunmak isterseniz, depoyu çatallayabilir ve istediğiniz değişiklikleri yapabilirsiniz. Ayrıca, iyileştirmeler veya hata düzeltmeleri için sorunları açabilir veya birleştirme istekleri gönderebilirsiniz.
-
 ### Lisans
 Bu kod MIT Lisansı altında lisanslanmıştır. Lisansın şartlarına uygun olarak özgürce kullanabilir, değiştirebilir ve dağıtabilirsiniz.
 
@@ -124,8 +121,6 @@ To use the stock analyzer application:
 
 - The application will retrieve the stock data and display the entered ticker. You can then explore the various technical indicators, predictions, and charts.
 
-### Contributing
-If you wish to contribute to this project, feel free to fork the repository and make any desired changes. You can also contribute by opening issues or submitting pull requests for improvements or bug fixes.
 
 ### License
 This code is licensed under the MIT License. You are free to use, modify, and distribute it in accordance with the terms of the license.
